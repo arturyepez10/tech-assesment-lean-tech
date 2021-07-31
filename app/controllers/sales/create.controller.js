@@ -1,7 +1,7 @@
 const moment = require('moment');
 const db = require("../../models");
 const Products = db.products;
-const Purchases = db.sales;
+const Purchases = db.purchases;
 const Orders = db.sales;
 const Op = db.Sequelize.Op;
 
@@ -15,8 +15,8 @@ exports.create = async (req, res) => {
     try {
         // Check if the product `idProducto` is link to a product
         const product = await Products.findAll({ where: {
-            idProduct: { [Op.like]: req.body.idProducto },
-            nameProduct: req.body.nombreProducto
+            id: { [Op.like]: req.body.idProducto },
+            name: req.body.nombreProducto
         }});
 
         if (!product) {
@@ -36,26 +36,31 @@ exports.create = async (req, res) => {
         // Purchases
         const oldPurchases = await Purchases.findAll({
             where: { 
-                date: { [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD") },
+                date: { 
+                    [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD"),  
+                    [Op.lte]: moment(req.body.fecha).format("YYYY-MM-DD")
+                },
                 idProduct: { [Op.like]: req.body.idProducto }
             }
         });
         const qtyPurchases = oldPurchases.reduce((acc, cv) => acc + cv.qty , 0);
 
         // Sales
-        const oldSales = await Sales.findAll({
+        const oldSales = await Orders.findAll({
             where: { 
-                date: { [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD") },
+                date: { 
+                    [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD"),  
+                    [Op.lte]: moment(req.body.fecha).format("YYYY-MM-DD")
+                },
                 idProduct: { [Op.like]: req.body.idProducto }
             }
         });
         const qtySales = oldSales.reduce((acc, cv) => acc + cv.qty , 0);
         
-        if (qtyPurchases - qtySales < req.body.qty) {
+        if (qtyPurchases - qtySales <= req.body.cantidad) {
             res.status(422).send({ message: "You can't make orders because there is not enough stock."})
             return;
         }
-
 
         // Creates the order
         const order = await Orders.create({ 

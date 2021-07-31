@@ -14,8 +14,8 @@ exports.create = async (req, res) => {
     try {
         // Check if the product `idProducto` is link to a product
         const product = await Products.findAll({ where: {
-            idProduct: { [Op.like]: req.body.idProducto },
-            nameProduct: req.body.nombreProducto
+            id: { [Op.like]: req.body.idProducto },
+            name: req.body.nombreProducto
         }});
 
         if (!product) {
@@ -26,13 +26,16 @@ exports.create = async (req, res) => {
         // Check if there is more than 30 products order in the last 30 days
         const oldOrders = await Orders.findAll({
             where: { 
-                date: { [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD") }, 
+                date: { 
+                    [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD"),  
+                    [Op.lte]: moment(req.body.fecha).format("YYYY-MM-DD")
+                },
                 idProduct: { [Op.like]: req.body.idProducto }
             }
         });
         const qty = oldOrders.reduce((acc, cv) => acc + cv.qty , 0);
         
-        if (qty + req.body.qty >= 30) {
+        if (qty + req.body.cantidad > 30) {
             res.status(422).send({ message: "You can't make orders when there is more than 30 products in the last 30 days."})
             return;
         }
