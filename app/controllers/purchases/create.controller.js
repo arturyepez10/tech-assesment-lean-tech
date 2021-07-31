@@ -42,7 +42,8 @@ exports.create = async (req, res) => {
             date: req.body.fecha,
             qty: req.body.cantidad,
             idProduct: req.body.idProducto,
-            nameProduct: req.body.nombreProducto 
+            nameProduct: req.body.nombreProducto,
+            id: req.body.id
         });
         res.send(order);
     } catch(e) {
