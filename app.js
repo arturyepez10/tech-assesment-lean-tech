@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const productsRoutes = require('./app/routes/products.routes');
+const purchasesRoutes = require('./app/routes/purchases.routes');
 
 const app = express();
 
@@ -19,10 +21,11 @@ app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-// simple route of testing
-app.get("/", (req, res) => {
-  res.json({ message: "Welcome to bezkoder application." });
-});
+// use the routes for products
+productsRoutes(app);
+
+// use the routes for purchase orders
+purchasesRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
