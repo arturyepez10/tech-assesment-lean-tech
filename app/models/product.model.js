@@ -3,8 +3,8 @@ module.exports = (sequelize, DataTypes) => {
     class Product extends Model {
         // Here we connect the relation declared in 'Sale' and 'Purchase' models
         static associate(models) {
-            this.hasMany(models['Sale'], { as: 'saleOrders', foreignKey: 'idProduct' });
-            this.hasMany(models['Purchase'], { as: 'purchaseOrders', foreignKey: 'idProduct' });
+            this.hasMany(models['Sale'], { onDelete: 'cascade' });
+            this.hasMany(models['Purchase'], { onDelete: 'cascade' });
         }
     }
 
