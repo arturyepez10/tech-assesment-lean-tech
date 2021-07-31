@@ -7,7 +7,7 @@ const Op = db.Sequelize.Op;
 
 // Creates and save a sales Order
 exports.create = async (req, res) => {
-    if (!req.body || !req.body.fecha || !req.body.qty || !req.body.idProducto || !req.body.nombreProducto) {
+    if (!req.body || !req.body.id  || !req.body.fecha || !req.body.cantidad || !req.body.idProducto || !req.body.nombreProducto) {
         res.status(400).send({ message: "The sale order needs a date, quantity, the id and name of the product." });
         return;
     }
@@ -36,7 +36,7 @@ exports.create = async (req, res) => {
         // Purchases
         const oldPurchases = await Purchases.findAll({
             where: { 
-                date: { [Op.gt]: moment().date(0).format("YYYY-MM-DD") }, // TODO: fix
+                date: { [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD") },
                 idProduct: { [Op.like]: req.body.idProducto }
             }
         });
@@ -45,7 +45,7 @@ exports.create = async (req, res) => {
         // Sales
         const oldSales = await Sales.findAll({
             where: { 
-                date: { [Op.gt]: moment().date(0).format("YYYY-MM-DD") }, // TODO: fix
+                date: { [Op.gt]: moment(req.body.fecha).date(0).format("YYYY-MM-DD") },
                 idProduct: { [Op.like]: req.body.idProducto }
             }
         });
@@ -59,8 +59,8 @@ exports.create = async (req, res) => {
 
         // Creates the order
         const order = await Orders.create({ 
-            date: req.body.date,
-            qty: req.body.qty,
+            date: req.body.fecha,
+            qty: req.body.cantidad,
             idProduct: req.body.idProducto,
             nameProduct: req.body.nombreProducto 
         });
