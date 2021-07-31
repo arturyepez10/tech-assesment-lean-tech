@@ -6,19 +6,19 @@ module.exports = app => {
     const router = require("express").Router();
 
     // Create a purchase order
-    router.post("/", controllers.create);
+    router.post("/registrar-compra", controllers.create);
 
     // Retrieves all purchase orders
-    router.get("/", controllers.findAll);
+    router.get("/compras", controllers.findAll);
 
     // Retrieve a single purchase order
-    router.get("/:id", controllers.find);
+    router.get("/compras/:id", controllers.find);
 
     // Update a purchase
-    router.put("/:id", controllers.update);
+    router.put("/compras/:id", controllers.update);
 
     // Deletes a purchase order
-    router.delete("/:id", controllers.delete);
+    router.delete("/compras/:id", controllers.delete);
 
-    app.use('/purchases/', router);
+    app.use('/', router);
 }
