@@ -8,10 +8,10 @@ const updateProduct = require('./products/update.controller');
 // Exports
 module.exports = {
     products: {
-        create: createProduct,
-        delete: deleteProduct,
-        findAll: findAllProduct,
-        find: findProduct,
-        update: updateProduct
+        create: createProduct.create,
+        delete: deleteProduct.delete,
+        findAll: findAllProduct.findAll,
+        find: findProduct.findOne,
+        update: updateProduct.update
     }
 }
