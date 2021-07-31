@@ -1,5 +1,6 @@
 version: '3'
 services:
+  # Declaration of the MYSQL container that will hold the database in Docker
   mysql:
     image: "mysql:5.7.10"
     ports:
@@ -15,6 +16,8 @@ services:
     volumes: 
       - db-data:/var/lib/mysql
     
+  # This is the declaration of the container for the main backend app and the connection
+  #  to the MYSQL container
   app:
     build:
       context: .
