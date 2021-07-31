@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const productsRoutes = require('./app/routes/products.routes');
 const purchasesRoutes = require('./app/routes/purchases.routes');
+const salesRoutes = require('./app/routes/sales.routes');
 
 const app = express();
 
@@ -26,6 +27,9 @@ productsRoutes(app);
 
 // use the routes for purchase orders
 purchasesRoutes(app);
+
+// use the routes for sales orders
+salesRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
