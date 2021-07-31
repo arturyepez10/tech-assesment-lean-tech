@@ -14,7 +14,7 @@ module.exports = app => {
     // Retrieve a single purchase order
     router.get("/:id", controllers.find);
 
-    // // Update a product
+    // Update a purchase
     router.put("/:id", controllers.update);
 
     // Deletes a purchase order

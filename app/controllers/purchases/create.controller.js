@@ -19,7 +19,7 @@ exports.create = async (req, res) => {
         }});
 
         if (!product) {
-            res.status(422).send({ message: "The product ID you passed, can't retrieve any product."})
+            res.status(404).send({ message: "The product ID you passed, can't retrieve any product."})
             return;
         }
 
@@ -38,7 +38,12 @@ exports.create = async (req, res) => {
         }
 
         // Creates the order
-        const order = await Orders.create({ date: req.body.date, qty: req.body.qty, idProduct: req.body.idProducto });
+        const order = await Orders.create({ 
+            date: req.body.date,
+            qty: req.body.qty,
+            idProduct: req.body.idProducto,
+            nameProduct: req.body.nombreProducto 
+        });
         res.send(order);
     } catch(e) {
         return res.status(500).send({ message: e.message || "Error while creating the purchase order." })
