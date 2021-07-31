@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "docker:build": "docker-compose build",
-    "docker:start": "source ./.env && docker-compose up"
+    "docker:start": "bash -c 'source ./.env && docker-compose up'"
   },
   "repository": {
     "type": "git",
