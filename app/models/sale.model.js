@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 
     // Initialization of the Model
     Sale.init({
+        id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
         date: { type: DataTypes.DATEONLY, allowNull: false },
         qty: { type: DataTypes.INTEGER, defaultValue: 0 }
     }, {
