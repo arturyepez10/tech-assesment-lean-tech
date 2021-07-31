@@ -77,3 +77,5 @@ npm run docker:start
 ```
 
 If you have an instance of MYSQL installed in your computer you may encounter a problem when this command is run. The problem is because both Docker MYSQL microserve and your instance of MYSQL will try to run in the same port "3306". To solve this, you must stop momentarily (while executing the project) your MYSQL, to do that run `sudo service mysql stop`. Then, the project should run without any problem.
+
+Sometimes, when creating the database for the first time it may be presented an error of connection between the project and the db. This is because the projects tries to link to the database before it creates itself so it fails. It is recommended if it happens, to wait for the DB to finish setting up, closing Docker and open it again. The problem should be solved and the connection made.
