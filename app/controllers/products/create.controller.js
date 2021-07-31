@@ -9,7 +9,7 @@ exports.create = (req, res) => {
     }
 
     // Creates the Product
-    Products.create({ name: req.body })
+    Products.create({ name: req.body.name })
         .then(data => res.send(data))
         .catch(err => res.status(500).send({ message: err.message || "Error while creating the Product." }));
 };
